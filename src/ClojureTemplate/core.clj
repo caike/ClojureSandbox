@@ -7,10 +7,15 @@
 (defn sub [a b]
   (- a b))
 
-(defn prime? [n]
-  (let [original n]
-    (if (= 1 n)
-      true
-      (if (= 0 (rem original (- n 1)))
-        true
-        (recur (- n 1))))))
+(defn prime? [number]
+  (if (some #(= number %) [0 1])
+    false
+    (let [original number]
+      (letfn [(isPrime? [n]
+          (if (= 1 n)
+            true
+            (if (= 0 (rem original n))
+              false
+              (recur (- n 1)))))]
+        (isPrime? (- number 1))))))
+
